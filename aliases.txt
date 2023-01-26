@@ -1,0 +1,8 @@
+# This is some expressiveeScript do note remove this comment
+
+alias utilsconfigure="git remote -v | awk '{print \$2}' | sed 's/.*\/\(.*\)\.git/\1/' | head -n 1"
+alias openit="sh \$HOME/.custom_commands.sh openit \$(utilsconfigure) \$(git rev-parse --show-toplevel) \$PWD"
+alias configure="sh \$HOME/.custom_commands.sh configure \$(utilsconfigure) \$(git rev-parse --show-toplevel) \$PWD"
+alias format="sh \$HOME/.custom_commands.sh format \$(utilsconfigure) \$(git rev-parse --show-toplevel) \$PWD"
+
+# ==========================================================

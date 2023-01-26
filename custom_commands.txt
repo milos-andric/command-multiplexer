@@ -1,0 +1,65 @@
+#!/bin/sh
+ 
+ function noisyConfigure {
+    repo_name=$1
+    repo_path=$2
+    PDIR=$3
+
+    cd $repo_path/Noisy/
+    rm -rf build
+    mkdir build
+    cd build
+    cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_OSX_ARCHITECTURES=$(uname -m)
+    VAR=$(egrep -o 'name="(Noisy_unofficial[^"]*)' ../Noisy/Noisy.jucer | sed "s/name=\"//")
+    sudo cp -r /Library/Audio/Presets/ExpressiveE/Noisy_v2 /Library/Audio/Presets/ExpressiveE/$VAR
+    rm ~/Library/Application\ Support/Noisy_unofficial_1.0.settings
+    cd $PDIR
+}
+
+function configure {
+    repo_name=$1
+    repo_path=$2
+    curr_path=$3
+
+   case $repo_name in
+    "Noisy") noisyConfigure $repo_name $repo_path $curr_path;;
+    *) echo "No known command $0 for $repo_name repo" ;;
+esac
+}
+
+function openit {
+    repo_name=$1
+    repo_path=$2
+    curr_path=$3
+
+   case $repo_name in
+    "Noisy") configure $repo_name $repo_path $curr_path && open $repo_path/Noisy/build/Noisy.xcodeproj;;
+    *) echo "No known command $0 for $repo_name repo" ;;
+esac
+}
+
+function format {
+    repo_name=$1
+    repo_path=$2
+    curr_path=$3
+
+   case $repo_name in
+    "Noisy") sh $repo_path/formatAllFiles.sh ;;
+    *) echo "No known command $0 for $repo_name repo" ;;
+esac
+}
+
+
+command=$1
+repo_name=$2
+repo_path=$3
+curr_path=$4
+
+echo "command used with $command at $repo_path in $repo_name"
+
+case $command in
+    "openit") openit $repo_name $repo_path $curr_path ;;
+    "configure") configure $repo_name $repo_path $curr_path ;;
+    "format") format $repo_name $repo_path $curr_path;;
+    *) echo "Invalid operator" ;;
+esac
