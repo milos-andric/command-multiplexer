@@ -11,7 +11,7 @@
     cd build
     cmake .. -G "Xcode" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_OSX_ARCHITECTURES=$(uname -m)
     VAR=$(egrep -o 'name="(Noisy_unofficial[^"]*)' ../Noisy/Noisy.jucer | sed "s/name=\"//")
-    sudo cp -r /Library/Audio/Presets/ExpressiveE/Noisy_v2 /Library/Audio/Presets/ExpressiveE/$VAR
+    sudo cp -r $repo_name/Noisy/Presets /Library/Audio/Presets/ExpressiveE/$VAR
     rm ~/Library/Application\ Support/Noisy_unofficial_1.0.settings
     cd $PDIR
 }
