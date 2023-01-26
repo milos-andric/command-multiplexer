@@ -21,7 +21,6 @@ if [ "$answer" == "y" ]; then
   else
     rc_file="$HOME/.bashrc"
   fi
-  echo $rc_file
 
   #finds the path to the custom_command script
   custom_command_path="$HOME/.custom_commands.sh"
@@ -32,6 +31,7 @@ if [ "$answer" == "y" ]; then
   is_there_already_a_script=$(grep "expressiveeScript" ~/.zshrc)
   if [ -n "$is_there_already_a_script" ]; then
     echo "Seems like there is already an expressivee alias in $rc_file"
+    echo "If you would like to proceed, make sure to delete the old set of aliases."
 
     read -p "do you want to proceed ? (y/n)" answer
 
@@ -40,6 +40,10 @@ if [ "$answer" == "y" ]; then
     fi
   fi
   echo "\n$aliases" >> $rc_file
+
+  RED='\033[0;31m'
+  NC='\033[0m' # No Color
+  echo -e "\n${RED}To make changes effective make sure to run the 'source ~/.zshrc' command or restart your terminal window${NC}"
 
 
 else
